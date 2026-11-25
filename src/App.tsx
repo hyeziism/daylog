@@ -987,11 +987,10 @@ const handleDeleteHealthEntry = () => {
         <section className="card">
   <h3>🍽️ 식단 관리</h3>
 
-  {(['아침', '점심', '저녁', '간식'] as const).map((meal) => (
+  {(['아침', '점심', '저녁'] as const).map((meal) => (
     <div key={meal} className="health-meal">
       <h4>{meal}</h4>
 
-      <label>음식명</label>
       <input
         id={`health-meal-${meal}`}
         name={`meal-${meal}`}
@@ -1002,18 +1001,106 @@ const handleDeleteHealthEntry = () => {
 }
       />
 
-      <label>칼로리 (kcal)</label>
-      <input
+       <input
         id={`health-calories-${meal}`}
         name={`calories-${meal}`}
         type="number"
-        placeholder="예: 500"
+        placeholder="섭취 칼로리 (kcal)"
         defaultValue={
   selectedHealthEntry?.meals.find((m) => m.type === meal)?.calories ?? ''
 }
       />
     </div>
   ))}
+</section>
+
+{/* 생리주기 기록 */}
+<section className="card health-period">
+  <h3>🌸 생리주기 기록</h3>
+
+  <label>생리 시작일</label>
+  <input
+    type="date"
+    value={periodStartDate}
+    onChange={(e) => setPeriodStartDate(e.target.value)}
+  />
+
+  <label>생리 종료일</label>
+  <input
+    type="date"
+    value={periodEndDate}
+    min={periodStartDate}
+    onChange={(e) => setPeriodEndDate(e.target.value)}
+  />
+
+  <button type="button" onClick={handleAddPeriod}>
+    생리 기록 저장
+  </button>
+
+  <hr />
+
+  <h4>📊 주기 분석</h4>
+
+  <div className="period-summary">
+    <div>
+      <span>평균 생리 주기</span>
+      <strong>
+        {averageCycleLength !== null
+          ? `${averageCycleLength}일`
+          : '기록 부족'}
+      </strong>
+    </div>
+
+    <div>
+      <span>다음 생리 예상일</span>
+      <strong>
+        {nextPeriodDate
+          ? new Date(`${nextPeriodDate}T12:00:00`).toLocaleDateString(
+              'ko-KR',
+              { year: 'numeric', month: 'long', day: 'numeric' }
+            )
+          : '기록 부족'}
+      </strong>
+    </div>
+  </div>
+
+  <hr />
+
+  <h4>📅 생리 기록 내역</h4>
+
+  {sortedPeriodEntries.length === 0 ? (
+    <p>아직 등록된 생리 기록이 없어.</p>
+  ) : (
+    sortedPeriodEntries.map((entry: MenstrualEntry) => (
+      <div className="period-item" key={entry.id}>
+        <div>
+          <strong>{entry.startDate}</strong>
+          <p>
+            종료일: {entry.endDate || '미입력'}
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => {
+            if (confirm('이 생리 기록을 삭제할까?')) {
+              const updated = periodEntries.filter(
+                (item:MenstrualEntry) => item.id !== entry.id
+              )
+
+              setPeriodEntries(updated)
+              localStorage.setItem(
+                'daylog-period-entries',
+                JSON.stringify(updated)
+              )
+            }
+          }}
+        >
+          삭제
+        </button>
+      </div>
+    ))
+  )}
 </section>
 
       </div>
@@ -1321,94 +1408,6 @@ const handleDeleteHealthEntry = () => {
     )}
   </div>
 </section>
-{/* 생리주기 기록 */}
-<section className="card health-period">
-  <h3>🌸 생리주기 기록</h3>
-
-  <label>생리 시작일</label>
-  <input
-    type="date"
-    value={periodStartDate}
-    onChange={(e) => setPeriodStartDate(e.target.value)}
-  />
-
-  <label>생리 종료일</label>
-  <input
-    type="date"
-    value={periodEndDate}
-    min={periodStartDate}
-    onChange={(e) => setPeriodEndDate(e.target.value)}
-  />
-
-  <button type="button" onClick={handleAddPeriod}>
-    생리 기록 저장
-  </button>
-
-  <hr />
-
-  <h4>📊 주기 분석</h4>
-
-  <div className="period-summary">
-    <div>
-      <span>평균 생리 주기</span>
-      <strong>
-        {averageCycleLength !== null
-          ? `${averageCycleLength}일`
-          : '기록 부족'}
-      </strong>
-    </div>
-
-    <div>
-      <span>다음 생리 예상일</span>
-      <strong>
-        {nextPeriodDate
-          ? new Date(`${nextPeriodDate}T12:00:00`).toLocaleDateString(
-              'ko-KR',
-              { year: 'numeric', month: 'long', day: 'numeric' }
-            )
-          : '기록 부족'}
-      </strong>
-    </div>
-  </div>
-
-  <hr />
-
-  <h4>📅 생리 기록 내역</h4>
-
-  {sortedPeriodEntries.length === 0 ? (
-    <p>아직 등록된 생리 기록이 없어.</p>
-  ) : (
-    sortedPeriodEntries.map((entry: MenstrualEntry) => (
-      <div className="period-item" key={entry.id}>
-        <div>
-          <strong>{entry.startDate}</strong>
-          <p>
-            종료일: {entry.endDate || '미입력'}
-          </p>
-        </div>
-
-        <button
-          type="button"
-          onClick={() => {
-            if (confirm('이 생리 기록을 삭제할까?')) {
-              const updated = periodEntries.filter(
-                (item:MenstrualEntry) => item.id !== entry.id
-              )
-
-              setPeriodEntries(updated)
-              localStorage.setItem(
-                'daylog-period-entries',
-                JSON.stringify(updated)
-              )
-            }
-          }}
-        >
-          삭제
-        </button>
-      </div>
-    ))
-  )}
-</section>
   </>
 )}
 
@@ -1460,9 +1459,9 @@ const handleDeleteHealthEntry = () => {
                   </button>
                 )}
 
-                <button onClick={saveJournal}>
-                  {editingEntryId ? '수정 완료' : '저장하기'}
-                </button>
+                <button className="diary-save-btn" onClick={saveJournal}>
+  {editingEntryId ? '수정 완료' : '저장하기'}
+</button>
               </div>
 
               <div className="journal-history">

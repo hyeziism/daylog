@@ -515,7 +515,7 @@ footer {
   border: none;
   border-radius: 9px;
   background: #3A211C;
-  color: #F4F1E8;
+  color: #BED6E3;
   font-weight: 600;
   cursor: pointer;
 }
@@ -538,17 +538,39 @@ footer {
   border-bottom: 1px solid #E1D8CC;
 }
 
-.entry-time {
-  color: #78A3C6;
-  font-size: 12px;
-  font-weight: 600;
+.journal-entry {
+  display: grid;
+  grid-template-columns: 80px minmax(0, 1fr);
+  column-gap: 0;
+  align-items: start;
 }
 
-.journal-entry p {
-  color: #3A211C;
+.entry-time {
+  grid-column: 1;
+  color: #78A3C6;
   font-size: 14px;
+  font-weight: bold;
+  text-align: left;
+  padding: 6px 8px;
+}
+
+.journal-entry p, 
+.entry-content {
+  grid-column: 2;
+  margin: 0;
+  color: #3A211C;
+  font-size: 12.5px;
   line-height: 1.8;
+  font-weight: 400;
   white-space: pre-wrap;
+  text-align: left;
+  padding: 6px 8px;
+  border-left: none;
+}
+
+.entry-content {
+  color: #3E2923;
+  text-align: left;
 }
 
 
@@ -868,10 +890,12 @@ footer {
   cursor: pointer;
 }
 .entry-actions {
+  grid-column: 1 / -1;        /* A열~B열 전체를 차지 */
   display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 12px;
+  justify-content: flex-end;  /* 오른쪽 끝으로 */
+  align-self: end;            /* 아래쪽으로 */
+  gap: 8px;
+  padding: 4px 8px;
 }
 
 .entry-actions button {
@@ -881,6 +905,8 @@ footer {
   cursor: pointer;
   font-size: 13px;
   font-weight: 600;
+  white-space: nowrap;        /* 글자가 세로로 쪼개지는 것 방지 */
+  text-align: right;
 }
 
 .entry-actions button:hover {
@@ -957,7 +983,7 @@ footer {
 /* 라벨 */
 .health-page label {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 2px;
   font-size: 13px;
   color: #3E2923;
 }
@@ -972,7 +998,7 @@ footer {
   width: 100%;
   min-width: 0;
   box-sizing: border-box;
-  padding: 11px 12px;
+  padding: 7px 10px;
   border: 1px solid #D8C9B9;
   border-radius: 10px;
   background: #F5F2EF;
@@ -1009,6 +1035,15 @@ footer {
 .health-meal {
   padding: 12px 0;
   border-top: 1px solid #C5D4DB;
+}
+
+.health-meal label {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.health-meal input {
+  margin-bottom: 12px;
 }
 
 /* =========================
@@ -1542,7 +1577,7 @@ footer {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
-  margin: 16px 0;
+  margin: 8px 0;
 }
 
 .period-summary > div {
