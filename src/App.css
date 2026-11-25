@@ -1171,15 +1171,35 @@ footer {
 
 @media (max-width: 700px) {
   .health-page {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
       "left"
       "right"
       "bottom";
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
   }
 
   .health-bottom {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    min-width: 0;
+  }
+
+  .health-page .card {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+   .health-page input:not([type="checkbox"]),
+  .health-page textarea,
+  .health-page select {
+    width: calc(100% - 12px);
+    max-width: calc(100% - 12px);
+    min-width: 0;
+    box-sizing: border-box;
+    display: block;
   }
 }
 /* =========================
@@ -1641,5 +1661,45 @@ footer {
 @media (max-width: 500px) {
   .period-summary {
     grid-template-columns: 1fr;
+  }
+}
+.health-time-input {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+.health-sleep {
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.health-sleep input {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* 모바일 HEALTH 입력창 너비 보정 */
+@media (max-width: 700px) {
+  .health-page .card {
+    padding: 16px;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .health-page .card input,
+  .health-page .card textarea,
+  .health-page .card select {
+    display: block;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
   }
 }

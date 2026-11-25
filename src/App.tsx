@@ -1144,11 +1144,12 @@ const handleDeleteHealthEntry = () => {
         </section>
 
         {/* 수면 */}
-        <section className="card">
+        <section className="card health-sleep">
           <h3>🌙 수면 관리</h3>
 
           <label>취침 시간</label>
 <input
+  className="health-time-input"
   id="health-sleep-start"
   name="sleep-start"
   type="time"
@@ -1157,6 +1158,7 @@ const handleDeleteHealthEntry = () => {
 
 <label>기상 시간</label>
 <input
+  className="health-time-input"
   id="health-sleep-end"
   name="sleep-end"
   type="time"
