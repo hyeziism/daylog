@@ -68,7 +68,6 @@ import './App.css'
 function App() {
   const [activeTab, setActiveTab] = useState('main')
   const [showYearMonths, setShowYearMonths] = useState(false)
-  const [monthlyDrawerOpen, setMonthlyDrawerOpen] = useState(false)
   const today = new Date().toLocaleDateString('sv-SE')
     const [healthEntries, setHealthEntries] = useState<HealthEntry[]>(() => {
   const saved = localStorage.getItem('daylog-health-entries')
@@ -341,13 +340,6 @@ const cancelEditJournal = () => {
   setEditingEntryId(null)
 }
 
-const getWeekStart = (date: Date) => {
-  const result = new Date(date)
-  const day = result.getDay()
-  result.setDate(result.getDate() - (day === 0 ? 6 : day - 1))
-  result.setHours(0, 0, 0, 0)
-  return result
-}
 const getWeekDays = (date: Date) => {
   const sunday = new Date(date)
   sunday.setDate(sunday.getDate() - sunday.getDay())
@@ -585,7 +577,7 @@ if (sleepStart && sleepEnd) {
     heartRate: getNumber('heart'),
     sleepStart: String(formData.get('sleep-start') || ''),
 sleepEnd: String(formData.get('sleep-end') || ''),
-sleepHours: null,
+sleepHours: sleepHours,
     water: getNumber('water') ?? 0,
     meals,
     memo: String(formData.get('memo') || ''),
