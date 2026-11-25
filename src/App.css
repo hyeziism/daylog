@@ -1192,15 +1192,14 @@ footer {
     box-sizing: border-box;
   }
 
-   .health-page input:not([type="checkbox"]),
-  .health-page textarea,
-  .health-page select {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
-    display: block;
-  }
+  .health-page .card input:not([type="checkbox"]),
+.health-page .card textarea,
+.health-page .card select {
+  width: 100%;
+  max-width: 100%;
+  margin-right: 0;
+  box-sizing: border-box;
+}
 }
 /* =========================
    복약 관리 원형 버튼
