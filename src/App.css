@@ -1540,7 +1540,7 @@ footer {
    생리주기 기록
 ========================= */
 
-.health-period {
+.health-period{
   margin-top: 24px;
   padding: 20px;
   background: #DCE6EA;
@@ -1589,6 +1589,21 @@ footer {
   background: #594039;
   color: #BED6E3;
   transform: translateY(-1px);
+}
+
+@media (max-width: 700px) {
+  .health-page .health-period {
+    padding: 20px;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .health-page .health-period input {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
 }
 
 /* 주기 요약 */
