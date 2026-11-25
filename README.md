@@ -73,3 +73,5 @@ export default defineConfig([
 ])
 
 ```
+# daylog
+personal health &amp; lifestyle tracker
